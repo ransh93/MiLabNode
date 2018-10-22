@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +18,12 @@ public class MainActivity extends AppCompatActivity {
 
 	public void fetchWeather(final View view) {
 		final WeatherFetcher fetcher = new WeatherFetcher(view.getContext());
+		final String city = ((EditText)findViewById(R.id.edit_city)).getText().toString();
 		final ProgressDialog progressDialog = new ProgressDialog(this);
-		progressDialog.setMessage("Fetching weather...");
+		progressDialog.setMessage("Fetching weather for " + city + "...");
 		progressDialog.show();
 
-		fetcher.dispatchRequest(new WeatherFetcher.WeatherResponseListener() {
+		fetcher.dispatchRequest(city, new WeatherFetcher.WeatherResponseListener() {
 			@Override
 			public void onResponse(WeatherFetcher.WeatherResponse response) {
 				progressDialog.hide();
